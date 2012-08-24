@@ -84,11 +84,13 @@ static NSString *const kStatusIDParameter = @"statusID";
     CFStringRef savedDefaultHandler = (__bridge CFStringRef)[[NSUserDefaults standardUserDefaults] stringForKey:kDefaultHandlerKey];
     if(!savedDefaultHandler) {
         _defaultHandler = LSCopyDefaultHandlerForURLScheme(HTTP);
-        if([(__bridge NSString *)_defaultHandler isEqualToString:(__bridge NSString *)bundleID]) {
-            _defaultHandler = savedDefaultHandler;
-        }
-        [[NSUserDefaults standardUserDefaults] setObject:(__bridge NSString *)_defaultHandler forKey:kDefaultHandlerKey];
+    } else {
+        _defaultHandler = savedDefaultHandler;
     }
+    if([(__bridge NSString *)_defaultHandler isEqualToString:(__bridge NSString *)bundleID]) {
+        _defaultHandler = savedDefaultHandler;
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:(__bridge NSString *)_defaultHandler forKey:kDefaultHandlerKey];
     LSSetDefaultHandlerForURLScheme(HTTP, bundleID);
     LSSetDefaultHandlerForURLScheme(HTTPS, bundleID);
 }
