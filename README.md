@@ -2,4 +2,4 @@ Lattice maps http:// and https:// urls to custom native app URL schemes based on
 
 Supported Apps
 --------------
-* Tweetbot (twitter.com -> tweetbot://)
+* Tweetbot for Mac (twitter.com -> tweetbot://)
