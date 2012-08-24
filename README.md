@@ -3,3 +3,4 @@ Lattice maps http:// and https:// URLs to custom native app URL schemes based on
 Supported Apps
 --------------
 * Tweetbot for Mac (twitter.com -> tweetbot://)
+    * Statuses
