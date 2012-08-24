@@ -3,7 +3,7 @@
 //  Lattice
 //
 //  Created by Jordan Kay on 8/24/12.
-//  Copyright (c) 2012 Twitter, Inc. All rights reserved.
+//  Copyright (c) 2012 Jordan Kay
 //
 
 #import <Foundation/Foundation.h>
