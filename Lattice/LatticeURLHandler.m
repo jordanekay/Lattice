@@ -58,6 +58,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
 
 - (void)registerToHandleURLSchemes
 {
+    // Grab the current handler (user’s default browser)
     CFStringRef bundleID = (__bridge CFStringRef)[[NSBundle mainBundle] bundleIdentifier];
     CFStringRef savedDefaultHandler = (__bridge CFStringRef)[[NSUserDefaults standardUserDefaults] stringForKey:kDefaultHandlerKey];
     if(!savedDefaultHandler) {
@@ -65,16 +66,20 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     } else {
         _defaultHandler = savedDefaultHandler;
     }
+    // We never want Lattice to be the default handler
+    // If it is, revert to the last saved handler (guaranteed not to be Lattice)
     if([(__bridge NSString *)_defaultHandler isEqualToString:(__bridge NSString *)bundleID]) {
         _defaultHandler = savedDefaultHandler;
     }
     [[NSUserDefaults standardUserDefaults] setObject:(__bridge NSString *)_defaultHandler forKey:kDefaultHandlerKey];
+    // Set Lattice as the “default browser”
     LSSetDefaultHandlerForURLScheme(HTTP, bundleID);
     LSSetDefaultHandlerForURLScheme(HTTPS, bundleID);
 }
 
 - (void)unregisterFromHandlingURLSchemes
 {
+    // Revert to original “default browser”
     LSSetDefaultHandlerForURLScheme(HTTP, _defaultHandler);
     LSSetDefaultHandlerForURLScheme(HTTPS, _defaultHandler);
 }
