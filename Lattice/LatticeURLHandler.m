@@ -6,20 +6,13 @@
 //  Copyright (c) 2012 Jordan Kay
 //
 
+#import "LatticeSchemes.h"
 #import "LatticeURLHandler.h"
 
 #define HTTP  CFSTR("http")
 #define HTTPS CFSTR("https")
 
 static NSString *const kDefaultHandlerKey = @"defaultHandler";
-
-static NSString *const kTwitterHostname = @"twitter.com";
-static NSString *const kTweetbotScheme  = @"tweetbot://";
-
-static NSString *const kUsernameParameter = @"username";
-static NSString *const kStatusIDParameter = @"statusID";
-
-#define TWEETBOT_STATUS_URL_TEMPLATE [NSString stringWithFormat:@"%@%@/status/%@", kTweetbotScheme, kUsernameParameter, kStatusIDParameter]
 
 @implementation LatticeURLHandler
 {
@@ -36,29 +29,14 @@ static NSString *const kStatusIDParameter = @"statusID";
     return sharedHandler;
 }
 
-+ (NSDictionary *)schemesForHosts
-{
-    return @{kTwitterHostname: kTweetbotScheme};
-}
-
-+ (NSDictionary *)templatesForSchemes
-{
-    return @{kTweetbotScheme: TWEETBOT_STATUS_URL_TEMPLATE};
-}
-
-+ (NSDictionary *)parametersForSchemes
-{
-    return @{kTweetbotScheme: @{kUsernameParameter: @1, kStatusIDParameter: @3}};
-}
-
 - (NSString *)_schemeMappedFromHost:(NSString *)host
 {
-    return [[self class] schemesForHosts][host];
+    return [LatticeSchemes schemesForHosts][host];
 }
 
 - (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme
 {
-    NSDictionary *parametersForScheme = [[self class] parametersForSchemes][scheme];
+    NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme];
     NSArray *components = [[url path] componentsSeparatedByString:@"/"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     for(NSString *parameter in parametersForScheme) {
@@ -71,7 +49,7 @@ static NSString *const kStatusIDParameter = @"statusID";
 - (NSURL *)_urlWithParameters:(NSDictionary *)parameters mappedToScheme:(NSString *)scheme
 {
     NSString *url;
-    NSString *urlTemplate = [[self class] templatesForSchemes][scheme];
+    NSString *urlTemplate = [LatticeSchemes templatesForSchemes][scheme];
     for(NSString *parameterName in parameters) {
         url = [urlTemplate stringByReplacingOccurrencesOfString:parameterName withString:parameters[parameterName] options:NSLiteralSearch range:NSMakeRange(0, [urlTemplate length])];
     }

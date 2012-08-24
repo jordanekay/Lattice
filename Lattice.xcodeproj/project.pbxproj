@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4516554C15E77970004BA1C5 /* LatticeSchemes.m in Sources */ = {isa = PBXBuildFile; fileRef = 4516554B15E77970004BA1C5 /* LatticeSchemes.m */; };
 		45AE7CF415E4B850008F3D6A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AE7CF315E4B850008F3D6A /* Cocoa.framework */; };
 		45AE7CFE15E4B850008F3D6A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45AE7CFC15E4B850008F3D6A /* InfoPlist.strings */; };
 		45AE7D0015E4B850008F3D6A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE7CFF15E4B850008F3D6A /* main.m */; };
@@ -31,6 +32,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4516554A15E77970004BA1C5 /* LatticeSchemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatticeSchemes.h; sourceTree = "<group>"; };
+		4516554B15E77970004BA1C5 /* LatticeSchemes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatticeSchemes.m; sourceTree = "<group>"; };
 		45AE7CEF15E4B850008F3D6A /* Lattice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lattice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AE7CF315E4B850008F3D6A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		45AE7CF615E4B850008F3D6A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -119,6 +122,8 @@
 			children = (
 				45AE7D0515E4B850008F3D6A /* LatticeAppDelegate.h */,
 				45AE7D0615E4B850008F3D6A /* LatticeAppDelegate.m */,
+				4516554A15E77970004BA1C5 /* LatticeSchemes.h */,
+				4516554B15E77970004BA1C5 /* LatticeSchemes.m */,
 				45AE7D2B15E4B8E8008F3D6A /* LatticeURLHandler.h */,
 				45AE7D2C15E4B8E8008F3D6A /* LatticeURLHandler.m */,
 				45AE7D3115E4BDD9008F3D6A /* MainMenu.xib */,
@@ -270,6 +275,7 @@
 				45AE7D0015E4B850008F3D6A /* main.m in Sources */,
 				45AE7D0715E4B850008F3D6A /* LatticeAppDelegate.m in Sources */,
 				45AE7D2D15E4B8E8008F3D6A /* LatticeURLHandler.m in Sources */,
+				4516554C15E77970004BA1C5 /* LatticeSchemes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +443,7 @@
 				45AE7D2315E4B850008F3D6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		45AE7D2415E4B850008F3D6A /* Build configuration list for PBXNativeTarget "LatticeTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +452,7 @@
 				45AE7D2615E4B850008F3D6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
