@@ -29,33 +29,6 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     return sharedHandler;
 }
 
-- (NSString *)_schemeMappedFromHost:(NSString *)host
-{
-    return [LatticeSchemes schemesForHosts][host];
-}
-
-- (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme
-{
-    NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme];
-    NSArray *components = [[url path] componentsSeparatedByString:@"/"];
-    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-    for(NSString *parameter in parametersForScheme) {
-        NSUInteger index = [parametersForScheme[parameter] unsignedIntValue];
-        parameters[parameter] = components[index];
-    }
-    return parameters;
-}
-                            
-- (NSURL *)_urlWithParameters:(NSDictionary *)parameters mappedToScheme:(NSString *)scheme
-{
-    NSString *url;
-    NSString *urlTemplate = [LatticeSchemes templatesForSchemes][scheme];
-    for(NSString *parameterName in parameters) {
-        url = [urlTemplate stringByReplacingOccurrencesOfString:parameterName withString:parameters[parameterName] options:NSLiteralSearch range:NSMakeRange(0, [urlTemplate length])];
-    }
-    return [NSURL URLWithString:url];
-}
-
 - (void)registerToHandleURLSchemes
 {
     // Grab the current handler (user’s default browser)
@@ -94,13 +67,6 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     [[NSAppleEventManager sharedAppleEventManager] removeEventHandlerForEventClass:kInternetEventClass andEventID:kAEGetURL];
 }
 
-- (void)openURLInDefaultBrowser:(NSURL *)url
-{
-    [self unregisterFromHandlingURLSchemes];
-    [[NSWorkspace sharedWorkspace] openURL:url];
-    [self registerToHandleURLSchemes];
-}
-
 - (void)_handleURLEvent:(NSAppleEventDescriptor *)event
 {
     NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
@@ -109,7 +75,41 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
         NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme];
         url = [self _urlWithParameters:parameters mappedToScheme:scheme];
     }
-    [self openURLInDefaultBrowser:url];
+    [self _openURLInDefaultBrowser:url];
+}
+
+- (void)_openURLInDefaultBrowser:(NSURL *)url
+{
+    [self unregisterFromHandlingURLSchemes];
+    [[NSWorkspace sharedWorkspace] openURL:url];
+    [self registerToHandleURLSchemes];
+}
+
+- (NSString *)_schemeMappedFromHost:(NSString *)host
+{
+    return [LatticeSchemes schemesForHosts][host];
+}
+
+- (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme
+{
+    NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme];
+    NSArray *components = [[url path] componentsSeparatedByString:@"/"];
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    for(NSString *parameter in parametersForScheme) {
+        NSUInteger index = [parametersForScheme[parameter] unsignedIntValue];
+        parameters[parameter] = components[index];
+    }
+    return parameters;
+}
+                            
+- (NSURL *)_urlWithParameters:(NSDictionary *)parameters mappedToScheme:(NSString *)scheme
+{
+    NSString *url;
+    NSString *urlTemplate = [LatticeSchemes templatesForSchemes][scheme];
+    for(NSString *parameterName in parameters) {
+        url = [urlTemplate stringByReplacingOccurrencesOfString:parameterName withString:parameters[parameterName] options:NSLiteralSearch range:NSMakeRange(0, [urlTemplate length])];
+    }
+    return [NSURL URLWithString:url];
 }
 
 @end
