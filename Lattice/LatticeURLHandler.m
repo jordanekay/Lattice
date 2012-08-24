@@ -107,7 +107,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     NSString *url;
     NSString *urlTemplate = [LatticeSchemes templatesForSchemes][scheme];
     for(NSString *parameterName in parameters) {
-        url = [urlTemplate stringByReplacingOccurrencesOfString:parameterName withString:parameters[parameterName] options:NSLiteralSearch range:NSMakeRange(0, [urlTemplate length])];
+        url = [urlTemplate stringByReplacingOccurrencesOfString:parameterName withString:parameters[parameterName]];
     }
     return [NSURL URLWithString:url];
 }
