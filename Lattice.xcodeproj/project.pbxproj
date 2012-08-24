@@ -11,12 +11,13 @@
 		45AE7CFE15E4B850008F3D6A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45AE7CFC15E4B850008F3D6A /* InfoPlist.strings */; };
 		45AE7D0015E4B850008F3D6A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE7CFF15E4B850008F3D6A /* main.m */; };
 		45AE7D0415E4B850008F3D6A /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 45AE7D0215E4B850008F3D6A /* Credits.rtf */; };
-		45AE7D0715E4B850008F3D6A /* LATAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE7D0615E4B850008F3D6A /* LATAppDelegate.m */; };
-		45AE7D0A15E4B850008F3D6A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AE7D0815E4B850008F3D6A /* MainMenu.xib */; };
+		45AE7D0715E4B850008F3D6A /* LatticeAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE7D0615E4B850008F3D6A /* LatticeAppDelegate.m */; };
 		45AE7D1215E4B850008F3D6A /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AE7D1115E4B850008F3D6A /* SenTestingKit.framework */; };
 		45AE7D1315E4B850008F3D6A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AE7CF315E4B850008F3D6A /* Cocoa.framework */; };
 		45AE7D1B15E4B850008F3D6A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45AE7D1915E4B850008F3D6A /* InfoPlist.strings */; };
 		45AE7D1E15E4B850008F3D6A /* LatticeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE7D1D15E4B850008F3D6A /* LatticeTests.m */; };
+		45AE7D2D15E4B8E8008F3D6A /* LatticeURLHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 45AE7D2C15E4B8E8008F3D6A /* LatticeURLHandler.m */; };
+		45AE7D3215E4BDD9008F3D6A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45AE7D3115E4BDD9008F3D6A /* MainMenu.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,20 +36,22 @@
 		45AE7CF615E4B850008F3D6A /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		45AE7CF715E4B850008F3D6A /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		45AE7CF815E4B850008F3D6A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		45AE7CFB15E4B850008F3D6A /* Lattice-Info.plist */ = {isa = PBXFileReference; path = "Lattice-Info.plist"; sourceTree = "<group>"; };
+		45AE7CFB15E4B850008F3D6A /* Lattice-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lattice-Info.plist"; sourceTree = "<group>"; };
 		45AE7CFD15E4B850008F3D6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		45AE7CFF15E4B850008F3D6A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		45AE7D0115E4B850008F3D6A /* Lattice-Prefix.pch */ = {isa = PBXFileReference; path = "Lattice-Prefix.pch"; sourceTree = "<group>"; };
+		45AE7D0115E4B850008F3D6A /* Lattice-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lattice-Prefix.pch"; sourceTree = "<group>"; };
 		45AE7D0315E4B850008F3D6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		45AE7D0515E4B850008F3D6A /* LATAppDelegate.h */ = {isa = PBXFileReference; path = LATAppDelegate.h; sourceTree = "<group>"; };
-		45AE7D0615E4B850008F3D6A /* LATAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LATAppDelegate.m; sourceTree = "<group>"; };
-		45AE7D0915E4B850008F3D6A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		45AE7D0515E4B850008F3D6A /* LatticeAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LatticeAppDelegate.h; sourceTree = "<group>"; };
+		45AE7D0615E4B850008F3D6A /* LatticeAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LatticeAppDelegate.m; sourceTree = "<group>"; };
 		45AE7D1015E4B850008F3D6A /* LatticeTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LatticeTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45AE7D1115E4B850008F3D6A /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		45AE7D1815E4B850008F3D6A /* LatticeTests-Info.plist */ = {isa = PBXFileReference; path = "LatticeTests-Info.plist"; sourceTree = "<group>"; };
+		45AE7D1815E4B850008F3D6A /* LatticeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LatticeTests-Info.plist"; sourceTree = "<group>"; };
 		45AE7D1A15E4B850008F3D6A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		45AE7D1C15E4B850008F3D6A /* LatticeTests.h */ = {isa = PBXFileReference; path = LatticeTests.h; sourceTree = "<group>"; };
+		45AE7D1C15E4B850008F3D6A /* LatticeTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LatticeTests.h; sourceTree = "<group>"; };
 		45AE7D1D15E4B850008F3D6A /* LatticeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LatticeTests.m; sourceTree = "<group>"; };
+		45AE7D2B15E4B8E8008F3D6A /* LatticeURLHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatticeURLHandler.h; sourceTree = "<group>"; };
+		45AE7D2C15E4B8E8008F3D6A /* LatticeURLHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatticeURLHandler.m; sourceTree = "<group>"; };
+		45AE7D3115E4BDD9008F3D6A /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,9 +117,11 @@
 		45AE7CF915E4B850008F3D6A /* Lattice */ = {
 			isa = PBXGroup;
 			children = (
-				45AE7D0515E4B850008F3D6A /* LATAppDelegate.h */,
-				45AE7D0615E4B850008F3D6A /* LATAppDelegate.m */,
-				45AE7D0815E4B850008F3D6A /* MainMenu.xib */,
+				45AE7D0515E4B850008F3D6A /* LatticeAppDelegate.h */,
+				45AE7D0615E4B850008F3D6A /* LatticeAppDelegate.m */,
+				45AE7D2B15E4B8E8008F3D6A /* LatticeURLHandler.h */,
+				45AE7D2C15E4B8E8008F3D6A /* LatticeURLHandler.m */,
+				45AE7D3115E4BDD9008F3D6A /* MainMenu.xib */,
 				45AE7CFA15E4B850008F3D6A /* Supporting Files */,
 			);
 			path = Lattice;
@@ -227,7 +232,7 @@
 			files = (
 				45AE7CFE15E4B850008F3D6A /* InfoPlist.strings in Resources */,
 				45AE7D0415E4B850008F3D6A /* Credits.rtf in Resources */,
-				45AE7D0A15E4B850008F3D6A /* MainMenu.xib in Resources */,
+				45AE7D3215E4BDD9008F3D6A /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +268,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				45AE7D0015E4B850008F3D6A /* main.m in Sources */,
-				45AE7D0715E4B850008F3D6A /* LATAppDelegate.m in Sources */,
+				45AE7D0715E4B850008F3D6A /* LatticeAppDelegate.m in Sources */,
+				45AE7D2D15E4B8E8008F3D6A /* LatticeURLHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,14 +306,6 @@
 				45AE7D0315E4B850008F3D6A /* en */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		45AE7D0815E4B850008F3D6A /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				45AE7D0915E4B850008F3D6A /* en */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 		45AE7D1915E4B850008F3D6A /* InfoPlist.strings */ = {

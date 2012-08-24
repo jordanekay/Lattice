@@ -3,7 +3,7 @@
 //  LatticeTests
 //
 //  Created by Jordan Kay on 8/21/12.
-//  Copyright (c) 2012 Twitter, Inc. All rights reserved.
+//  Copyright (c) 2012 Jordan Kay
 //
 
 #import "LatticeTests.h"
@@ -13,14 +13,12 @@
 - (void)setUp
 {
     [super setUp];
-    
     // Set-up code here.
 }
 
 - (void)tearDown
 {
     // Tear-down code here.
-    
     [super tearDown];
 }
 
