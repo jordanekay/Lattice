@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const kTcoHostname;
+
 @interface LatticeSchemes : NSObject
 
 + (NSDictionary *)schemesForHosts;

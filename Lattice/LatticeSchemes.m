@@ -14,6 +14,8 @@ static NSString *const kTweetbotScheme  = @"tweetbot://";
 static NSString *const kUsernameParameter = @"username";
 static NSString *const kStatusIDParameter = @"statusID";
 
+NSString *const kTcoHostname = @"t.co";
+
 #define TWEETBOT_STATUS_URL_TEMPLATE [NSString stringWithFormat:@"%@%@/status/%@", kTweetbotScheme, kUsernameParameter, kStatusIDParameter]
 
 @implementation LatticeSchemes

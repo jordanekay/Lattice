@@ -8,6 +8,7 @@
 
 #import "LatticeSchemes.h"
 #import "LatticeURLHandler.h"
+#import "NSURL+Expansion.h"
 
 #define HTTP  CFSTR("http")
 #define HTTPS CFSTR("https")
@@ -69,13 +70,16 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
 
 - (void)_handleURLEvent:(NSAppleEventDescriptor *)event
 {
-    NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
-    NSString *scheme = [self _schemeMappedFromHost:[url host]];
-    if(scheme) {
-        NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme];
-        url = [self _urlWithParameters:parameters mappedToScheme:scheme];
-    }
-    [self _openURLInDefaultBrowser:url];
+    __block NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
+    [url expandFromHost:kTcoHostname expansion:^(NSURL *expandedURL) {
+        url = expandedURL;
+        NSString *scheme = [self _schemeMappedFromHost:[url host]];
+        if(scheme) {
+            NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme];
+            url = [self _urlWithParameters:parameters mappedToScheme:scheme];
+        }
+        [self _openURLInDefaultBrowser:url];
+    }];
 }
 
 - (void)_openURLInDefaultBrowser:(NSURL *)url
