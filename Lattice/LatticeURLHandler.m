@@ -41,7 +41,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     }
     // We never want Lattice to be the default handler
     // If it is, revert to the last saved handler (guaranteed not to be Lattice)
-    if([(__bridge NSString *)_defaultHandler isEqualToString:(__bridge NSString *)bundleID]) {
+    if(CFStringCompare(_defaultHandler, bundleID, 0) == kCFCompareEqualTo) {
         _defaultHandler = savedDefaultHandler;
     }
     [[NSUserDefaults standardUserDefaults] setObject:(__bridge NSString *)_defaultHandler forKey:kDefaultHandlerKey];
