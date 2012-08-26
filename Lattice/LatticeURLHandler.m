@@ -73,10 +73,11 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     __block NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
     [url expandFromHost:kTcoHostname expansion:^(NSURL *expandedURL) {
         url = expandedURL;
-        NSString *scheme = [self _schemeMappedFromHost:[url host]];
-        if(scheme) {
-            NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme];
-            url = [self _urlWithParameters:parameters mappedToScheme:scheme];
+        NSString *scheme = [self _schemeMappedFromHost:url.host];
+        NSString *template = [self _templateForHost:url.host path:url.path];
+        if(scheme && template) {
+            NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme fromTemplate:template];
+            url = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
         }
         [self _openURLInDefaultBrowser:url];
     }];
@@ -89,14 +90,27 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     [self registerToHandleURLSchemes];
 }
 
+- (NSString *)_templateForHost:(NSString *)host path:(NSString *)path
+{
+    NSArray *templates = [LatticeSchemes templatesForHosts][host];
+    NSString *matchedTemplate;
+    for(NSString *template in templates) {
+        NSRegularExpression *templateRegex = [NSRegularExpression regularExpressionWithPattern:template options:0 error:nil];
+        if([templateRegex firstMatchInString:path options:0 range:NSMakeRange(0, [path length])]) {
+            matchedTemplate = template;
+        }
+    }
+    return matchedTemplate;
+}
+
 - (NSString *)_schemeMappedFromHost:(NSString *)host
 {
     return [LatticeSchemes schemesForHosts][host];
 }
 
-- (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme
+- (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme fromTemplate:(NSString *)template
 {
-    NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme];
+    NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme][template];
     NSArray *components = [[url path] componentsSeparatedByString:@"/"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     for(NSString *parameter in parametersForScheme) {
@@ -106,10 +120,10 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
     return parameters;
 }
                             
-- (NSURL *)_urlWithParameters:(NSDictionary *)parameters mappedToScheme:(NSString *)scheme
+- (NSURL *)_urlWithParameters:(NSDictionary *)parameters mappedToScheme:(NSString *)scheme fromTemplate:(NSString *)template
 {
     NSString *url;
-    NSString *urlTemplate = [LatticeSchemes templatesForSchemes][scheme];
+    NSString *urlTemplate = [LatticeSchemes templatesForSchemes][scheme][template];
     for(NSString *parameterName in parameters) {
         url = [urlTemplate stringByReplacingOccurrencesOfString:parameterName withString:parameters[parameterName]];
     }

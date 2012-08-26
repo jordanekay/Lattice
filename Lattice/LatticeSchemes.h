@@ -12,6 +12,7 @@ extern NSString *const kTcoHostname;
 
 @interface LatticeSchemes : NSObject
 
++ (NSDictionary *)templatesForHosts;
 + (NSDictionary *)schemesForHosts;
 + (NSDictionary *)templatesForSchemes;
 + (NSDictionary *)parametersForSchemes;
