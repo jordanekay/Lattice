@@ -70,9 +70,14 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
 
 - (void)_handleURLEvent:(NSAppleEventDescriptor *)event
 {
-    __block NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
-    [url expandFromHost:kTcoHostname expansion:^(NSURL *expandedURL) {
-        url = expandedURL;
+    NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
+    [url expandFromHost:kTcoHostname expansion:[self _openURLBlock]];
+}
+
+- (NSURLExpansionBlock)_openURLBlock
+{
+    return ^(NSURL *expandedURL) {
+        NSURL *url = expandedURL;
         NSString *scheme = [self _schemeMappedFromHost:url.host];
         NSString *template = [self _templateForHost:url.host path:url.path];
         if(scheme && template) {
@@ -80,7 +85,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
             url = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
         }
         [self _openURLInDefaultBrowser:url];
-    }];
+    };
 }
 
 - (void)_openURLInDefaultBrowser:(NSURL *)url
