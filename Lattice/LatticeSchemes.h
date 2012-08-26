@@ -8,10 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+#define HTTP  CFSTR("http")
+#define HTTPS CFSTR("https")
+
 extern NSString *const kTcoHostname;
 
 @interface LatticeSchemes : NSObject
 
++ (NSDictionary *)httpSchemesForScheme;
 + (NSDictionary *)templatesForHosts;
 + (NSDictionary *)schemesForHosts;
 + (NSDictionary *)templatesForSchemes;

@@ -46,6 +46,14 @@
 				<string>lattice</string>
 			</array>
 		</dict>
+        <dict>
+			<key>CFBundleURLName</key>
+			<string>Secure Lattice URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>lattices</string>
+			</array>
+		</dict>
     </array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

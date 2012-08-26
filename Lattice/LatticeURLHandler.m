@@ -10,9 +10,6 @@
 #import "LatticeURLHandler.h"
 #import "NSURL+Expansion.h"
 
-#define HTTP  CFSTR("http")
-#define HTTPS CFSTR("https")
-
 static NSString *const kDefaultHandlerKey     = @"defaultHandler";
 static NSString *const kHashbangPathComponent = @"/#!";
 
@@ -150,7 +147,8 @@ static NSString *const kHashbangPathComponent = @"/#!";
 {
     NSURL *url = [[NSURL alloc] initWithString:[self.absoluteString stringByReplacingOccurrencesOfString:kHashbangPathComponent withString:@""]];
     NSString *hostPathParameterString = [[url.absoluteString componentsSeparatedByString:url.scheme] lastObject];
-    NSURL *normalizedURL = [[NSURL alloc] initWithString:[(__bridge NSString *)HTTP stringByAppendingString:hostPathParameterString]];
+    NSString *scheme = [LatticeSchemes httpSchemesForScheme][url.scheme] ?: url.scheme;
+    NSURL *normalizedURL = [[NSURL alloc] initWithString:[scheme stringByAppendingString:hostPathParameterString]];
     return normalizedURL;
 }
 

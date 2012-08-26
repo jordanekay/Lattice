@@ -8,6 +8,9 @@
 
 #import "LatticeSchemes.h"
 
+static NSString *const kLatticeScheme        = @"lattice";
+static NSString *const kLatticeSchemeSecure  = @"lattices";
+
 static NSString *const kTwitterHostname = @"twitter.com";
 static NSString *const kTweetbotScheme  = @"tweetbot://";
 
@@ -26,6 +29,12 @@ NSString *const kTcoHostname = @"t.co";
 #define TWEETBOT_STATUS_URL_TEMPLATE  [NSString stringWithFormat:@"%@%@/status/%@", kTweetbotScheme, kUsernameParameter, kStatusIDParameter]
 
 @implementation LatticeSchemes
+
++ (NSDictionary *)httpSchemesForScheme
+{
+    return @{kLatticeScheme:       (__bridge NSString *)HTTP,
+             kLatticeSchemeSecure: (__bridge NSString *)HTTPS};
+}
 
 + (NSDictionary *)templatesForHosts
 {
