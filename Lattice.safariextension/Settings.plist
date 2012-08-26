@@ -4,19 +4,19 @@
 <array>
 	<dict>
 		<key>DefaultValue</key>
-		<string>Tweetbot for Mac</string>
+		<true/>
 		<key>Key</key>
-		<string>twitterClient</string>
+		<string>kTwitterProfilesKey</string>
 		<key>Secure</key>
 		<false/>
 		<key>Title</key>
-		<string>Twitter Client</string>
+		<string>Twitter Profiles</string>
 		<key>Titles</key>
 		<array>
 			<string>Tweetbot for Mac</string>
 		</array>
 		<key>Type</key>
-		<string>PopUpButton</string>
+		<string>CheckBox</string>
 		<key>Values</key>
 		<array>
 			<string>com.tapbots.TweetbotMacAdHoc</string>
@@ -24,21 +24,31 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>Dash</string>
+		<true/>
 		<key>Key</key>
-		<string>docViewer</string>
+		<string>kTweetsKey</string>
 		<key>Title</key>
-		<string>Documentation Viewer</string>
+		<string>Tweets</string>
 		<key>Titles</key>
 		<array>
 			<string>Dash</string>
 		</array>
 		<key>Type</key>
-		<string>PopUpButton</string>
+		<string>CheckBox</string>
 		<key>Values</key>
 		<array>
 			<string>com.kapeli.dash</string>
 		</array>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<true/>
+		<key>Key</key>
+		<string>kAppleDocumentationKey</string>
+		<key>Title</key>
+		<string>Apple Documentation</string>
+		<key>Type</key>
+		<string>CheckBox</string>
 	</dict>
 </array>
 </plist>
