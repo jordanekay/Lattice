@@ -15,6 +15,19 @@
 
 @end
 
+@implementation NSURL (Expansion)
+
+- (void)expandFromHost:(NSString *)host expansion:(NSURLExpansionBlock)expansionBlock
+{
+    static NSURLExpander *expander = nil;
+    if(!expander) {
+        expander = [[NSURLExpander alloc] initWithSourceHost:host expansionBlock:expansionBlock];
+    }
+    [expander expandURL:self];
+}
+
+@end
+
 @implementation NSURLExpander
 {
     NSString *_sourceHost;
@@ -47,19 +60,6 @@
         _connection = nil;
     }
     return request;
-}
-
-@end
-
-@implementation NSURL (Expansion)
-
-- (void)expandFromHost:(NSString *)host expansion:(NSURLExpansionBlock)expansionBlock
-{
-    static NSURLExpander *expander = nil;
-    if(!expander) {
-        expander = [[NSURLExpander alloc] initWithSourceHost:host expansionBlock:expansionBlock];
-    }
-    [expander expandURL:self];
 }
 
 @end
