@@ -5,6 +5,10 @@ safari.application.addEventListener('beforeNavigate', handleOpenURL, false)
 safari.application.addEventListener('navigate', registerToHandleURL, false)
 
 var hosts = ['twitter.com']
+var usernamePattern = '[A-Za-z0-9_]{1,15}'
+var statusIDPattern = '[0-9]+'
+var usernamePath = '^/' + usernamePattern + '$'
+var statusIDPath = '^/' + usernamePattern + '/status(es)?/' + statusIDPattern + '$'
 
 Array.prototype.contains = function(obj) {
     for(i in this) {
@@ -15,21 +19,35 @@ Array.prototype.contains = function(obj) {
     return false
 }
 
+var getLocation = function(href) {
+    var l = document.createElement('a')
+    l.href = href
+    return l
+}
+
+function shouldRedirect(url) {
+    var l = getLocation(url)
+    var hostname = l.hostname
+    var pathname = l.pathname
+    if(!hosts.contains(hostname) && hostname.length) {
+        return false
+    }
+    if(pathname.match(usernamePath) || pathname.match(statusIDPath)) {
+        return true
+    }
+    return false
+}
+
 function handleOpenURL(event) {
     var url = event.url
-    var getLocation = function(href) {
-        var l = document.createElement('a')
-        l.href = href
-        return l
-    }
-    var hostname = getLocation(url).hostname
-    if(!hosts.contains(hostname) && hostname.length) {
-        safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
-    } else {
+    if(shouldRedirect(url)) {
         url = url.replace('http://',  'lattice://')
         url = url.replace('https://', 'lattices://')
         event.preventDefault()
         safari.application.activeBrowserWindow.activeTab.url = url
+
+    } else if(url) {
+        safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
     }
 }
 
