@@ -18,17 +18,16 @@ Array.prototype.contains = function(obj) {
 function handleOpenURL(event) {
     var url = event.url
     var getLocation = function(href) {
-	var l = document.createElement('a')
+        var l = document.createElement('a')
         l.href = href
-	return l
-	
+        return l
     }
     var hostname = getLocation(event.url).hostname
     if(!hosts.contains(hostname) && hostname.length) {
-	safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
+        safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
     } else {
         url = event.url.replace('http://',  'lattice://')
-	url = url.replace('https://', 'lattice://')
+        url = url.replace('https://', 'lattice://')
     }
     event.preventDefault()
     safari.application.activeBrowserWindow.activeTab.url = url
