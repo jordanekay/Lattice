@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>DefaultValue</key>
+		<string>Tweetbot for Mac</string>
+		<key>Key</key>
+		<string>twitterClient</string>
+		<key>Secure</key>
+		<true/>
+		<key>Title</key>
+		<string>Twitter Client</string>
+		<key>Titles</key>
+		<array>
+			<string>Tweetbot for Mac</string>
+			<string>Osfoora for Mac</string>
+			<string>Twitterrific for Mac</string>
+			<string>Twitter for Mac</string>
+			<string>Echofon for Mac</string>
+			<string>Hibari</string>
+		</array>
+		<key>Type</key>
+		<string>PopUpButton</string>
+		<key>Values</key>
+		<array>
+			<string>com.tapbots.TweetbotMac</string>
+			<string>osfoora.osfooramac</string>
+			<string>com.iconfactory.Twitterrific</string>
+			<string>com.twitter.twitter-mac</string>
+			<string>com.echofon.Echofon-Premium-AppStore</string>
+			<string>com.violasong.Hibari</string>
+		</array>
+	</dict>
+</array>
+</plist>
