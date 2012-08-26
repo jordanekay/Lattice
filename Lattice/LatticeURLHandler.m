@@ -76,7 +76,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
 
 - (NSURLExpansionBlock)_openURLBlock
 {
-    return ^(NSURL *expandedURL) {
+    return [^(NSURL *expandedURL) {
         NSURL *url = expandedURL;
         NSString *scheme = [self _schemeMappedFromHost:url.host];
         NSString *template = [self _templateForHost:url.host path:url.path];
@@ -85,7 +85,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
             url = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
         }
         [self _openURLInDefaultBrowser:url];
-    };
+    } copy];
 }
 
 - (void)_openURLInDefaultBrowser:(NSURL *)url
