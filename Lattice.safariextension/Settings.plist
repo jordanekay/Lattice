@@ -8,28 +8,36 @@
 		<key>Key</key>
 		<string>twitterClient</string>
 		<key>Secure</key>
-		<true/>
+		<false/>
 		<key>Title</key>
 		<string>Twitter Client</string>
 		<key>Titles</key>
 		<array>
 			<string>Tweetbot for Mac</string>
-			<string>Osfoora for Mac</string>
-			<string>Twitterrific for Mac</string>
-			<string>Twitter for Mac</string>
-			<string>Echofon for Mac</string>
-			<string>Hibari</string>
 		</array>
 		<key>Type</key>
 		<string>PopUpButton</string>
 		<key>Values</key>
 		<array>
-			<string>com.tapbots.TweetbotMac</string>
-			<string>osfoora.osfooramac</string>
-			<string>com.iconfactory.Twitterrific</string>
-			<string>com.twitter.twitter-mac</string>
-			<string>com.echofon.Echofon-Premium-AppStore</string>
-			<string>com.violasong.Hibari</string>
+			<string>com.tapbots.TweetbotMacAdHoc</string>
+		</array>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>Dash</string>
+		<key>Key</key>
+		<string>docViewer</string>
+		<key>Title</key>
+		<string>Documentation Viewer</string>
+		<key>Titles</key>
+		<array>
+			<string>Dash</string>
+		</array>
+		<key>Type</key>
+		<string>PopUpButton</string>
+		<key>Values</key>
+		<array>
+			<string>com.kapeli.dash</string>
 		</array>
 	</dict>
 </array>
