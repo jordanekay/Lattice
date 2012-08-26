@@ -22,15 +22,15 @@ function handleOpenURL(event) {
         l.href = href
         return l
     }
-    var hostname = getLocation(event.url).hostname
+    var hostname = getLocation(url).hostname
     if(!hosts.contains(hostname) && hostname.length) {
         safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
     } else {
         url = url.replace('http://',  'lattice://')
-        url = url.replace('https://', 'lattice://')
+        url = url.replace('https://', 'lattices://')
+        event.preventDefault()
+        safari.application.activeBrowserWindow.activeTab.url = url
     }
-    event.preventDefault()
-    safari.application.activeBrowserWindow.activeTab.url = url
 }
 
 function registerToHandleURL(event) {
