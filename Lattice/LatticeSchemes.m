@@ -20,7 +20,7 @@ static NSString *const kStatusIDPattern = @"[0-9]+";
 NSString *const kTcoHostname = @"t.co";
 
 #define TWITTER_PROFILE_PATH_TEMPLATE [NSString stringWithFormat:@"^(/#!)?/%@$", kUsernamePattern]
-#define TWITTER_STATUS_PATH_TEMPLATE  [NSString stringWithFormat:@"/statuses/%@$", kStatusIDPattern]
+#define TWITTER_STATUS_PATH_TEMPLATE  [NSString stringWithFormat:@"/status(es)?/%@$", kStatusIDPattern]
 
 #define TWEETBOT_PROFILE_URL_TEMPLATE [NSString stringWithFormat:@"%@%@/user_profile/%@", kTweetbotScheme, kUsernameParameter, kUsernameParameter]
 #define TWEETBOT_STATUS_URL_TEMPLATE  [NSString stringWithFormat:@"%@%@/status/%@", kTweetbotScheme, kUsernameParameter, kStatusIDParameter]
