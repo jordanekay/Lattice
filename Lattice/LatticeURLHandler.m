@@ -71,7 +71,9 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
 - (void)_handleURLEvent:(NSAppleEventDescriptor *)event
 {
     NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
-    [url expandFromHost:kTcoHostname expansion:[self _openURLBlock]];
+    NSString *hostPathParameterString = [[url.absoluteString componentsSeparatedByString:url.scheme] lastObject];
+    NSURL *httpURL = [[NSURL alloc] initWithString:[(__bridge NSString *)HTTP stringByAppendingString:hostPathParameterString]];
+    [httpURL expandFromHost:kTcoHostname expansion:[self _openURLBlock]];
 }
 
 - (NSURLExpansionBlock)_openURLBlock
