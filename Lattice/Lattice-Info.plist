@@ -38,7 +38,15 @@
 				<string>https</string>
 			</array>
 		</dict>
-	</array>
+        <dict>
+			<key>CFBundleURLName</key>
+			<string>Lattice URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>lattice</string>
+			</array>
+		</dict>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSMinimumSystemVersion</key>
