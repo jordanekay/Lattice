@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<script>
+safari.application.addEventListener('beforeNavigate', handleOpenURL, false)
+safari.application.addEventListener('navigate', registerToHandleURL, false)
+
+var hosts = ['twitter.com']
+
+Array.prototype.contains = function(obj) {
+   for(i in this) {
+       if(this[i] == obj) {
+		   return true;
+	   }
+   }
+   return false;
+}
+
+function handleOpenURL(event) {
+	var url = event.url
+	var getLocation = function(href) {
+	    var l = document.createElement('a')
+	    l.href = href
+	    return l
+	}
+	var hostname = getLocation(event.url).hostname
+	if(!hosts.contains(hostname) && hostname.length) {
+		safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
+	} else {
+		url = event.url.replace('http://', 'lattice://')
+	}
+	event.preventDefault()
+	safari.application.activeBrowserWindow.activeTab.url = url
+}
+
+function registerToHandleURL(event) {
+	safari.application.addEventListener('beforeNavigate', handleOpenURL, false)
+}
+
+</script> 
