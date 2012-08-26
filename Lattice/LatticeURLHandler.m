@@ -13,7 +13,14 @@
 #define HTTP  CFSTR("http")
 #define HTTPS CFSTR("https")
 
-static NSString *const kDefaultHandlerKey = @"defaultHandler";
+static NSString *const kDefaultHandlerKey     = @"defaultHandler";
+static NSString *const kHashbangPathComponent = @"/#!";
+
+@interface NSURL (Normalization)
+
+- (NSURL *)normalizedURL;
+
+@end
 
 @implementation LatticeURLHandler
 {
@@ -71,9 +78,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
 - (void)_handleURLEvent:(NSAppleEventDescriptor *)event
 {
     NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
-    NSString *hostPathParameterString = [[url.absoluteString componentsSeparatedByString:url.scheme] lastObject];
-    NSURL *httpURL = [[NSURL alloc] initWithString:[(__bridge NSString *)HTTP stringByAppendingString:hostPathParameterString]];
-    [httpURL expandFromHost:kTcoHostname expansion:[self _openURLBlock]];
+    [[url normalizedURL] expandFromHost:kTcoHostname expansion:[self _openURLBlock]];
 }
 
 - (NSURLExpansionBlock)_openURLBlock
@@ -118,7 +123,7 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
 - (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme fromTemplate:(NSString *)template
 {
     NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme][template];
-    NSArray *components = [[url path] componentsSeparatedByString:@"/"];
+    NSArray *components = [url.path componentsSeparatedByString:@"/"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     for(NSString *parameter in parametersForScheme) {
         NSUInteger index = [parametersForScheme[parameter] unsignedIntValue];
@@ -135,6 +140,18 @@ static NSString *const kDefaultHandlerKey = @"defaultHandler";
         url = [urlTemplate stringByReplacingOccurrencesOfString:parameterName withString:parameters[parameterName]];
     }
     return [NSURL URLWithString:url];
+}
+
+@end
+
+@implementation NSURL (Normalization)
+
+- (NSURL *)normalizedURL
+{
+    NSURL *url = [[NSURL alloc] initWithString:[self.absoluteString stringByReplacingOccurrencesOfString:kHashbangPathComponent withString:@""]];
+    NSString *hostPathParameterString = [[url.absoluteString componentsSeparatedByString:url.scheme] lastObject];
+    NSURL *normalizedURL = [[NSURL alloc] initWithString:[(__bridge NSString *)HTTP stringByAppendingString:hostPathParameterString]];
+    return normalizedURL;
 }
 
 @end

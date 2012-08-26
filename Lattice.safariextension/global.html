@@ -25,7 +25,8 @@ function handleOpenURL(event) {
 	if(!hosts.contains(hostname) && hostname.length) {
 		safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
 	} else {
-		url = event.url.replace('http://', 'lattice://')
+		url = event.url.replace('http://',  'lattice://')
+		url = url.replace('https://', 'lattice://')
 	}
 	event.preventDefault()
 	safari.application.activeBrowserWindow.activeTab.url = url
