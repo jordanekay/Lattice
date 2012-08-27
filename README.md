@@ -7,10 +7,10 @@ Supported Apps
     * Statuses
 * iTunes Store
 * Mac App Store
+* Dash (Apple documentation)
    
 Future Plans
 ------------
-* Dash (Apple documentation)
 * Twitter for Mac
 * Osfoora for Mac
 * Rdio

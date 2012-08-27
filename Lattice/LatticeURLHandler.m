@@ -145,12 +145,25 @@ static NSString *const kHashbangPathComponent = @"/#!";
 
 - (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme fromTemplate:(NSString *)template
 {
-    NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme][template];
-    NSArray *components = [url.path componentsSeparatedByString:@"/"];
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme][template];
+    void (^parameterBlock)(NSString *parameter, NSUInteger index);
+    if([[LatticeSchemes schemesWithCaptureGroups] containsObject:scheme]) {
+        parameterBlock = ^(NSString *parameter, NSUInteger index) {
+            NSRegularExpression *templateRegex = [NSRegularExpression regularExpressionWithPattern:template options:0 error:nil];
+            NSArray *results = [templateRegex matchesInString:url.path options:0 range:NSMakeRange(0, [url.path length])];
+            for(NSTextCheckingResult *result in results) {
+                parameters[parameter] = [url.path substringWithRange:[result rangeAtIndex:index]];
+            }
+        };
+    } else {
+        parameterBlock = ^(NSString *parameter, NSUInteger index) {
+            parameters[parameter] = url.pathComponents[index];
+        };
+    }
     for(NSString *parameter in parametersForScheme) {
         NSUInteger index = [parametersForScheme[parameter] unsignedIntValue];
-        parameters[parameter] = components[index];
+        parameterBlock(parameter, index);
     }
     return parameters;
 }
@@ -171,7 +184,9 @@ static NSString *const kHashbangPathComponent = @"/#!";
 
 - (NSURL *)normalizedURL
 {
-    NSURL *url = [[NSURL alloc] initWithString:[self.absoluteString stringByReplacingOccurrencesOfString:kHashbangPathComponent withString:@""]];
+    NSString *urlString = [self.absoluteString stringByReplacingOccurrencesOfString:kHashbangPathComponent withString:@""];
+    urlString = [urlString stringByReplacingOccurrencesOfString:@"#" withString:@""];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSString *hostPathParameterString = [[url.absoluteString componentsSeparatedByString:url.scheme] lastObject];
     NSString *scheme = [LatticeSchemes httpSchemesForScheme][url.scheme] ?: url.scheme;
     NSURL *normalizedURL = [[NSURL alloc] initWithString:[scheme stringByAppendingString:hostPathParameterString]];

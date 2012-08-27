@@ -21,5 +21,6 @@ extern NSString *const kTcoHostname;
 + (NSDictionary *)queryBasedSchemesForHosts;
 + (NSDictionary *)templatesForSchemes;
 + (NSDictionary *)parametersForSchemes;
++ (NSArray *)schemesWithCaptureGroups;
 
 @end
