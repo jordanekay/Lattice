@@ -9,7 +9,7 @@ var statusIDPattern = '[0-9]+'
 var usernamePath = '^/' + usernamePattern + '$'
 var statusIDPath = '^/' + usernamePattern + '/status(es)?/' + statusIDPattern + '$'
 var mediaPath = 'app|artist|album|playlist|track'
-var documentationPath = 'documentation/'
+var documentationPath = '(documentation|DOCUMENTATION)/'
 
 var hosts = ['twitter.com', 'itunes.apple.com', 'developer.apple.com', 'open.spotify.com']
 var pathnames = [usernamePath, statusIDPath, mediaPath, documentationPath]
