@@ -10,6 +10,6 @@ typedef void (^ NSURLExpansionBlock)(NSURL *expandedURL);
 
 @interface NSURL (Expansion)
 
-- (void)expandFromHost:(NSString *)host expansion:(NSURLExpansionBlock)expansionBlock;
+- (void)expandFromHosts:(NSArray *)hosts expansion:(NSURLExpansionBlock)expansionBlock;
 
 @end

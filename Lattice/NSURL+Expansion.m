@@ -10,18 +10,18 @@
 
 @interface NSURLExpander : NSObject <NSURLConnectionDelegate>
 
-- (id)initWithSourceHost:(NSString *)sourceHost expansionBlock:(NSURLExpansionBlock)block;
+- (id)initWithSourceHosts:(NSArray *)sourceHosts expansionBlock:(NSURLExpansionBlock)block;
 - (void)expandURL:(NSURL *)url;
 
 @end
 
 @implementation NSURL (Expansion)
 
-- (void)expandFromHost:(NSString *)host expansion:(NSURLExpansionBlock)expansionBlock
+- (void)expandFromHosts:(NSArray *)hosts expansion:(NSURLExpansionBlock)expansionBlock
 {
     static NSURLExpander *expander = nil;
     if(!expander) {
-        expander = [[NSURLExpander alloc] initWithSourceHost:host expansionBlock:expansionBlock];
+        expander = [[NSURLExpander alloc] initWithSourceHosts:hosts expansionBlock:expansionBlock];
     }
     [expander expandURL:self];
 }
@@ -30,15 +30,15 @@
 
 @implementation NSURLExpander
 {
-    NSString *_sourceHost;
+    NSArray *_sourceHosts;
     NSURLConnection *_connection;
     NSURLExpansionBlock _expansionBlock;
 }
 
-- (id)initWithSourceHost:(NSString *)sourceHost expansionBlock:(NSURLExpansionBlock)block
+- (id)initWithSourceHosts:(NSArray *)sourceHosts expansionBlock:(NSURLExpansionBlock)block
 {
     if(self = [super init]) {
-        _sourceHost = [sourceHost copy];
+        _sourceHosts = sourceHosts;
         _expansionBlock = [block copy];
     }
     return self;
@@ -52,7 +52,7 @@
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse
 {
-    if(![request.URL.host isEqualToString:_sourceHost]) {
+    if(![_sourceHosts containsObject:request.URL.host]) {
         if(_expansionBlock) {
             _expansionBlock(request.URL);
         }

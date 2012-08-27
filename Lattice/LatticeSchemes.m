@@ -32,7 +32,10 @@ static NSString *const kResourceIDParameter = @"resourceID";
 static NSString *const kUsernamePattern = @"[A-Za-z0-9_]{1,15}";
 static NSString *const kStatusIDPattern = @"[0-9]+";
 
-NSString *const kTcoHostname = @"t.co";
+NSString *const kTcoHostname     = @"t.co";
+NSString *const kSpotifiHostname = @"spoti.fi";
+NSString *const kBitlyHostname   = @"bit.ly";
+NSString *const kJmpHostname     = @"j.mp";
 
 #define TWITTER_PROFILE_PATH_TEMPLATE [NSString stringWithFormat:@"^(/#!)?/%@$", kUsernamePattern]
 #define TWITTER_STATUS_PATH_TEMPLATE  [NSString stringWithFormat:@"/status(es)?/%@$", kStatusIDPattern]
@@ -98,6 +101,11 @@ NSString *const kTcoHostname = @"t.co";
 + (NSArray *)schemesWithCaptureGroups
 {
     return @[kDashScheme, kSpotifyScheme];
+}
+
++ (NSArray *)shortenedHostnames
+{
+    return @[kTcoHostname, kSpotifiHostname, kBitlyHostname, kJmpHostname];
 }
 
 @end

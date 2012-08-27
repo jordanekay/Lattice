@@ -75,7 +75,7 @@ static NSString *const kHashbangPathComponent = @"/#!";
 - (void)_handleURLEvent:(NSAppleEventDescriptor *)event
 {
     NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
-    [[url normalizedURL] expandFromHost:kTcoHostname expansion:[self _openURLBlock]];
+    [[url normalizedURL] expandFromHosts:[LatticeSchemes shortenedHostnames] expansion:[self _openURLBlock]];
 }
 
 - (NSURLExpansionBlock)_openURLBlock
