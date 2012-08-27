@@ -8,15 +8,15 @@ Supported Apps
 * iTunes Store
 * Mac App Store
 * Dash (Apple documentation)
+* Spotify
    
 Future Plans
 ------------
 * Twitter for Mac
 * Osfoora for Mac
-* Rdio
-* Spotify
 
 On Hold
 -------
 * Carousel (Instagram viewer)
    * URL scheme has [changed](https://twitter.com/jordanekay/statuses/239994528889729024)?
+* Rdio (no Mac URL scheme)

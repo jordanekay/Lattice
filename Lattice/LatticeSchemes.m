@@ -21,9 +21,13 @@ static NSString *const kMacAppStoreScheme   = @"macappstore://";
 static NSString *const kAppleDeveloperHostname = @"developer.apple.com";
 static NSString *const kDashScheme             = @"dash://";
 
-static NSString *const kUsernameParameter  = @"username";
-static NSString *const kStatusIDParameter  = @"statusID";
-static NSString *const kClassNameParameter = @"className";
+static NSString *const kSpotifyHostname = @"open.spotify.com";
+static NSString *const kSpotifyScheme   = @"spotify://";
+
+static NSString *const kUsernameParameter   = @"username";
+static NSString *const kStatusIDParameter   = @"statusID";
+static NSString *const kClassNameParameter  = @"className";
+static NSString *const kResourceIDParameter = @"resourceID";
 
 static NSString *const kUsernamePattern = @"[A-Za-z0-9_]{1,15}";
 static NSString *const kStatusIDPattern = @"[0-9]+";
@@ -40,8 +44,10 @@ NSString *const kTcoHostname = @"t.co";
 #define MAC_APP_STORE_PATH_TEMPLATE @"12$"
 
 #define APPLE_DOCUMENTATION_PATH_TEMPLATE @"/.*/(.*)_Class"
-
 #define DASH_DOCUMENTATION_URL_TEMPLATE [NSString stringWithFormat:@"%@%@", kDashScheme, kClassNameParameter]
+
+#define SPOTIFY_PATH_TEMPLATE @"^/(.*)"
+#define SPOTIFY_URL_TEMPLATE  [NSString stringWithFormat:@"%@%@", kSpotifyScheme, kResourceIDParameter]
 
 @implementation LatticeSchemes
 
@@ -55,12 +61,15 @@ NSString *const kTcoHostname = @"t.co";
 {
     return @{kTwitterHostname: @[TWITTER_PROFILE_PATH_TEMPLATE, TWITTER_STATUS_PATH_TEMPLATE],
          kITunesStoreHostname: @[ITUNES_STORE_PATH_TEMPLATE, MAC_APP_STORE_PATH_TEMPLATE],
-      kAppleDeveloperHostname: @[APPLE_DOCUMENTATION_PATH_TEMPLATE]};
+      kAppleDeveloperHostname: @[APPLE_DOCUMENTATION_PATH_TEMPLATE],
+             kSpotifyHostname: @[SPOTIFY_PATH_TEMPLATE]};
 }
 
 + (NSDictionary *)schemesForHosts
 {
-    return @{kTwitterHostname: kTweetbotScheme, kAppleDeveloperHostname: kDashScheme};
+    return @{kTwitterHostname: kTweetbotScheme,
+      kAppleDeveloperHostname: kDashScheme,
+             kSpotifyHostname: kSpotifyScheme};
 }
 
 + (NSDictionary *)queryBasedSchemesForHosts
@@ -74,19 +83,21 @@ NSString *const kTcoHostname = @"t.co";
                                      TWITTER_STATUS_PATH_TEMPLATE: TWEETBOT_STATUS_URL_TEMPLATE},
           kITunesStoreScheme:        @{ITUNES_STORE_PATH_TEMPLATE: @""},
           kMacAppStoreScheme:       @{MAC_APP_STORE_PATH_TEMPLATE: @""},
-                 kDashScheme: @{APPLE_DOCUMENTATION_PATH_TEMPLATE: DASH_DOCUMENTATION_URL_TEMPLATE}};
+                 kDashScheme: @{APPLE_DOCUMENTATION_PATH_TEMPLATE: DASH_DOCUMENTATION_URL_TEMPLATE},
+              kSpotifyScheme:             @{SPOTIFY_PATH_TEMPLATE: SPOTIFY_URL_TEMPLATE}};
 }
 
 + (NSDictionary *)parametersForSchemes
 {
     return @{kTweetbotScheme:     @{TWITTER_PROFILE_PATH_TEMPLATE: @{kUsernameParameter: @1},
                                      TWITTER_STATUS_PATH_TEMPLATE: @{kUsernameParameter: @1, kStatusIDParameter: @3}},
-                 kDashScheme: @{APPLE_DOCUMENTATION_PATH_TEMPLATE: @{kClassNameParameter: @1}}};
+                 kDashScheme: @{APPLE_DOCUMENTATION_PATH_TEMPLATE: @{kClassNameParameter: @1}},
+              kSpotifyScheme:             @{SPOTIFY_PATH_TEMPLATE: @{kResourceIDParameter: @1}}};
 }
 
 + (NSArray *)schemesWithCaptureGroups
 {
-    return @[kDashScheme];
+    return @[kDashScheme, kSpotifyScheme];
 }
 
 @end
