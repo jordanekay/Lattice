@@ -4,11 +4,14 @@
 safari.application.addEventListener('beforeNavigate', handleOpenURL, false)
 safari.application.addEventListener('navigate', registerToHandleURL, false)
 
-var hosts = ['twitter.com']
 var usernamePattern = '[A-Za-z0-9_]{1,15}'
 var statusIDPattern = '[0-9]+'
 var usernamePath = '^/' + usernamePattern + '$'
 var statusIDPath = '^/' + usernamePattern + '/status(es)?/' + statusIDPattern + '$'
+var appPath = '.*'
+
+var hosts = ['twitter.com', 'itunes.apple.com']
+var pathnames = [usernamePath, statusIDPath, appPath]
 
 Array.prototype.contains = function(obj) {
     for(i in this) {
@@ -32,8 +35,10 @@ function shouldRedirect(url) {
     if(!hosts.contains(hostname) && hostname.length) {
         return false
     }
-    if(pathname.match(usernamePath) || pathname.match(statusIDPath)) {
-        return true
+    for(i = 0; i < pathnames.length; i++) {
+        if(pathname.match(pathnames[i])) {
+            return true
+        }
     }
     return false
 }

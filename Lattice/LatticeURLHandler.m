@@ -82,11 +82,21 @@ static NSString *const kHashbangPathComponent = @"/#!";
 {
     return [^(NSURL *expandedURL) {
         NSURL *url = expandedURL;
+        NSString *template;
         NSString *scheme = [self _schemeMappedFromHost:url.host];
-        NSString *template = [self _templateForHost:url.host path:url.path];
+        if(scheme) {
+            template = [self _templateForHost:url.host path:url.path];
+        } else {
+            scheme = [self _schemeMappedFromHost:url.host query:url.absoluteString template:&template];
+        }
         if(scheme && template) {
-            NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme fromTemplate:template];
-            url = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
+            if([template length]) {
+                NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme fromTemplate:template];
+                url = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
+            } else {
+                NSString *urlString = [[url.absoluteString componentsSeparatedByString:[url.scheme stringByAppendingString:@"://"]] lastObject];
+                url = [NSURL URLWithString:[scheme stringByAppendingString:urlString]];
+            }
         }
         [self _openURLInDefaultBrowser:url];
     } copy];
@@ -115,6 +125,22 @@ static NSString *const kHashbangPathComponent = @"/#!";
 - (NSString *)_schemeMappedFromHost:(NSString *)host
 {
     return [LatticeSchemes schemesForHosts][host];
+}
+
+- (NSString *)_schemeMappedFromHost:(NSString *)host query:(NSString *)query template:(NSString **)outTemplate
+{
+    NSArray *schemes = [LatticeSchemes queryBasedSchemesForHosts][host];
+    for(NSString *scheme in schemes) {
+        NSDictionary *templates = [LatticeSchemes templatesForSchemes][scheme];
+        for(NSString *template in [templates allKeys]) {
+            NSRegularExpression *templateRegex = [NSRegularExpression regularExpressionWithPattern:template options:0 error:nil];
+            if([templateRegex firstMatchInString:query options:0 range:NSMakeRange(0, [query length])]) {
+                *outTemplate = templates[template];
+                return scheme;
+            }
+        }
+    }
+    return nil;
 }
 
 - (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme fromTemplate:(NSString *)template

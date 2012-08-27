@@ -18,6 +18,7 @@ extern NSString *const kTcoHostname;
 + (NSDictionary *)httpSchemesForScheme;
 + (NSDictionary *)templatesForHosts;
 + (NSDictionary *)schemesForHosts;
++ (NSDictionary *)queryBasedSchemesForHosts;
 + (NSDictionary *)templatesForSchemes;
 + (NSDictionary *)parametersForSchemes;
 

@@ -5,11 +5,11 @@ Supported Apps
 * Tweetbot for Mac (twitter.com -> tweetbot://)
     * User Profiles
     * Statuses
+* iTunes Store
+* Mac App Store
    
 Future Plans
 ------------
-* iTunes Store
-* Mac App Store
 * Carousel (Instagram viewer)
 * Dash (Apple documentation)
 * Twitter for Mac
