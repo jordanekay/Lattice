@@ -10,6 +10,7 @@ Future Plans
 ------------
 * iTunes Store
 * Mac App Store
+* Carousel (Instagram viewer)
 * Dash (Apple documentation)
 * Twitter for Mac
 * Osfoora for Mac
