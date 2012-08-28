@@ -22,6 +22,7 @@ extern NSString *const kTcoHostname;
 + (NSDictionary *)templatesForSchemes;
 + (NSDictionary *)parametersForSchemes;
 + (NSArray *)schemesWithCaptureGroups;
++ (NSArray *)hostnamesWithParameterlessPaths;
 + (NSArray *)shortenedHostnames;
 
 @end

@@ -16,6 +16,7 @@ static NSString *const kHashbangPathComponent = @"/#!";
 @interface NSURL (Normalization)
 
 - (NSURL *)normalizedURL;
+- (NSURL *)urlWithScheme:(NSString *)scheme;
 
 @end
 
@@ -89,13 +90,12 @@ static NSString *const kHashbangPathComponent = @"/#!";
         } else {
             scheme = [self _schemeMappedFromHost:url.host query:url.absoluteString template:&template];
         }
-        if(scheme && template) {
+        if(scheme && template && [self _urlMatchesPath:url]) {
             if([template length]) {
                 NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme fromTemplate:template];
                 url = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
             } else {
-                NSString *urlString = [[url.absoluteString componentsSeparatedByString:[url.scheme stringByAppendingString:@"://"]] lastObject];
-                url = [NSURL URLWithString:[scheme stringByAppendingString:urlString]];
+                url = [url urlWithScheme:scheme];
             }
         }
         [self _openURLInDefaultBrowser:url];
@@ -107,6 +107,13 @@ static NSString *const kHashbangPathComponent = @"/#!";
     [self unregisterFromHandlingURLSchemes];
     [[NSWorkspace sharedWorkspace] openURL:url];
     [self registerToHandleURLSchemes];
+}
+
+- (BOOL)_urlMatchesPath:(NSURL *)url
+{
+    NSArray *hostnames = [LatticeSchemes hostnamesWithParameterlessPaths];
+    NSString *pathWithParameters = [[url.absoluteString componentsSeparatedByString:url.host] lastObject];
+    return !([hostnames containsObject:url.host] && ![pathWithParameters isEqualToString:url.path]);
 }
 
 - (NSString *)_templateForHost:(NSString *)host path:(NSString *)path
@@ -191,6 +198,12 @@ static NSString *const kHashbangPathComponent = @"/#!";
     NSString *scheme = [LatticeSchemes httpSchemesForScheme][url.scheme] ?: url.scheme;
     NSURL *normalizedURL = [[NSURL alloc] initWithString:[scheme stringByAppendingString:hostPathParameterString]];
     return normalizedURL;
+}
+
+- (NSURL *)urlWithScheme:(NSString *)scheme
+{
+    NSString *urlString = [[self.absoluteString componentsSeparatedByString:[self.scheme stringByAppendingString:@"://"]] lastObject];
+    return [NSURL URLWithString:[scheme stringByAppendingString:urlString]];
 }
 
 @end

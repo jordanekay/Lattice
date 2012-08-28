@@ -12,6 +12,7 @@ var mediaPath = 'app|artist|album|playlist|track'
 var documentationPath = '(documentation|DOCUMENTATION)/'
 
 var hosts = ['twitter.com', 'itunes.apple.com', 'developer.apple.com', 'open.spotify.com']
+var parameterlessHosts = ['twitter.com']
 var pathnames = [usernamePath, statusIDPath, mediaPath, documentationPath]
 
 Array.prototype.contains = function(obj) {
@@ -35,6 +36,11 @@ function shouldRedirect(url) {
     var pathname = l.pathname
     if(!hosts.contains(hostname) && hostname.length) {
         return false
+    }
+    if(parameterlessHosts.contains(hostname)) {
+        if(!url.match(pathname + '$')) {
+            return false
+        }
     }
     for(i = 0; i < pathnames.length; i++) {
         if(pathname.match(pathnames[i])) {

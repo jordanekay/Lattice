@@ -103,6 +103,11 @@ NSString *const kJmpHostname     = @"j.mp";
     return @[kDashScheme, kSpotifyScheme];
 }
 
++ (NSArray *)hostnamesWithParameterlessPaths
+{
+    return @[kTwitterHostname];
+}
+
 + (NSArray *)shortenedHostnames
 {
     return @[kTcoHostname, kSpotifiHostname, kBitlyHostname, kJmpHostname];
