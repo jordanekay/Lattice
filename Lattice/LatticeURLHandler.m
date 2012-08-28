@@ -194,7 +194,7 @@ static NSString *const kHashbangPathComponent = @"/#!";
     NSString *urlString = [self.absoluteString stringByReplacingOccurrencesOfString:kHashbangPathComponent withString:@""];
     urlString = [urlString stringByReplacingOccurrencesOfString:@"#" withString:@""];
     NSURL *url = [[NSURL alloc] initWithString:urlString];
-    NSString *hostPathParameterString = [[url.absoluteString componentsSeparatedByString:url.scheme] lastObject];
+    NSString *hostPathParameterString = [url.absoluteString substringFromIndex:[url.scheme length]];
     NSString *scheme = [LatticeSchemes httpSchemesForScheme][url.scheme] ?: url.scheme;
     NSURL *normalizedURL = [[NSURL alloc] initWithString:[scheme stringByAppendingString:hostPathParameterString]];
     return normalizedURL;
