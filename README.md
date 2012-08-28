@@ -19,11 +19,10 @@ Supported Apps
    
 Future Plans
 ------------
+* Carousel (Instagram viewer)
 * Twitter for Mac
 * Osfoora for Mac
 
 On Hold
 -------
-* Carousel (Instagram viewer)
-   * URL scheme has [changed](https://twitter.com/jordanekay/statuses/239994528889729024)?
 * Rdio (no Mac URL scheme)
