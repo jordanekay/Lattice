@@ -24,5 +24,5 @@ Future Plans
 
 On Hold
 -------
-* Osfoora for Mac [URL scheme support coming soon](https://twitter.com/saidmarouf/statuses/240562661916553219)
+* Osfoora for Mac ([URL scheme support coming soon](https://twitter.com/saidmarouf/statuses/240562661916553219))
 * Rdio (no Mac URL scheme)
