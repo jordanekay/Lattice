@@ -16,10 +16,10 @@ Supported Apps
 * Mac App Store
 * Dash (Apple documentation)
 * Spotify
+* Carousel (Instagram viewer)
    
 Future Plans
 ------------
-* Carousel (Instagram viewer)
 * Twitter for Mac
 
 On Hold
