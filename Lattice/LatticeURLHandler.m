@@ -77,15 +77,15 @@ static NSString *const kHashbangPathComponent = @"/#!";
 {
     NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
     [[url normalizedURL] expandFromHosts:[LatticeSchemes shortenedHostnames] expansion:^(NSURL *expandedURL) {
-        NSURL *mappedURL = [self _urlMappedFromURL:url];
+        NSURL *mappedURL = [self _urlMappedFromURL:expandedURL];
         [self _openURLInDefaultBrowser:mappedURL];
     }];
 }
 
 - (NSURL *)_urlMappedFromURL:(NSURL *)url
 {
-    NSURL *mappedURL;
     NSString *template;
+    NSURL *mappedURL = url;
     NSString *scheme = [self _schemeMappedFromHost:url.host];
     if(scheme) {
         template = [self _templateForHost:url.host path:url.path];
