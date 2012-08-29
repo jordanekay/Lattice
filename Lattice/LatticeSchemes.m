@@ -52,7 +52,7 @@ static NSString *const kInstagrHostName = @"instagr.am";
 #define ITUNES_STORE_PATH_TEMPLATE  @"(8$|artist|album|playlist)"
 #define MAC_APP_STORE_PATH_TEMPLATE @"12$"
 
-#define APPLE_DOCUMENTATION_PATH_TEMPLATE @"/.*/(.*)_Class"
+#define APPLE_DOCUMENTATION_PATH_TEMPLATE @"/.*/(.*)_(C|c)lass"
 #define DASH_DOCUMENTATION_URL_TEMPLATE [NSString stringWithFormat:@"%@%@", kDashScheme, kClassNameParameter]
 
 #define SPOTIFY_PATH_TEMPLATE @"^/(.*)"
