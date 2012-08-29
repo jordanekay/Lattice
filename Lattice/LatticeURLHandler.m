@@ -77,8 +77,12 @@ static NSString *const kHashbangPathComponent = @"/#!";
 {
     NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
     [[url normalizedURL] expandFromHosts:[LatticeSchemes shortenedHostnames] expansion:^(NSURL *expandedURL) {
-        NSURL *mappedURL = [self _urlMappedFromURL:expandedURL];
-        [self _openURLInDefaultBrowser:mappedURL];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            NSURL *mappedURL = [self _urlMappedFromURL:expandedURL];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self _openURLInDefaultBrowser:mappedURL];
+            });
+        });
     }];
 }
 
@@ -154,6 +158,7 @@ static NSString *const kHashbangPathComponent = @"/#!";
 - (NSDictionary *)_parametersForURL:(NSURL *)url mappedToScheme:(NSString *)scheme fromTemplate:(NSString *)template
 {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSArray *oEmbedParameters = [LatticeSchemes oEmbedBasedParametersForHosts][url.host];
     NSDictionary *parametersForScheme = [LatticeSchemes parametersForSchemes][scheme][template];
     void (^parameterBlock)(NSString *parameter, NSUInteger index);
     if([[LatticeSchemes schemesWithCaptureGroups] containsObject:scheme]) {
@@ -164,14 +169,34 @@ static NSString *const kHashbangPathComponent = @"/#!";
                 parameters[parameter] = [url.path substringWithRange:[result rangeAtIndex:index]];
             }
         };
+    } else if(oEmbedParameters) {
+        parameters = [NSMutableDictionary dictionaryWithDictionary:[self _parametersForURL:url oEmbedParameters:oEmbedParameters]];
     } else {
         parameterBlock = ^(NSString *parameter, NSUInteger index) {
             parameters[parameter] = url.pathComponents[index];
         };
     }
-    for(NSString *parameter in parametersForScheme) {
-        NSUInteger index = [parametersForScheme[parameter] unsignedIntValue];
-        parameterBlock(parameter, index);
+    if(parameterBlock) {
+        for(NSString *parameter in parametersForScheme) {
+            NSUInteger index = [parametersForScheme[parameter] unsignedIntValue];
+            parameterBlock(parameter, index);
+        }
+    }
+    return parameters;
+}
+
+- (NSDictionary *)_parametersForURL:(NSURL *)url oEmbedParameters:(NSArray *)oEmbedParameters
+{
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+    NSString *oEmbed = [LatticeSchemes oEmbedsForHosts][url.host];
+    NSURL *oEmbedURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@%@%@", url.scheme, oEmbed, url.host, url.path]];
+    NSData *oEmbedData = [NSData dataWithContentsOfURL:oEmbedURL];
+    NSDictionary *oEmbedContents = [NSJSONSerialization JSONObjectWithData:oEmbedData options:0 error:nil];
+    for(NSString *parameter in oEmbedParameters) {
+        NSString *oEmbedParameter = oEmbedContents[parameter];
+        if(oEmbedParameter) {
+            parameters[parameter] = oEmbedParameter;
+        }
     }
     return parameters;
 }

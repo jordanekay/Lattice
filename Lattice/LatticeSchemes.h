@@ -16,6 +16,8 @@
 + (NSDictionary *)httpSchemesForScheme;
 + (NSDictionary *)templatesForHosts;
 + (NSDictionary *)schemesForHosts;
++ (NSDictionary *)oEmbedsForHosts;
++ (NSDictionary *)oEmbedBasedParametersForHosts;
 + (NSDictionary *)queryBasedSchemesForHosts;
 + (NSDictionary *)templatesForSchemes;
 + (NSDictionary *)parametersForSchemes;
