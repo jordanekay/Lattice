@@ -11,8 +11,6 @@
 #define HTTP  CFSTR("http")
 #define HTTPS CFSTR("https")
 
-extern NSString *const kTcoHostname;
-
 @interface LatticeSchemes : NSObject
 
 + (NSDictionary *)httpSchemesForScheme;
