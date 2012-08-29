@@ -76,30 +76,31 @@ static NSString *const kHashbangPathComponent = @"/#!";
 - (void)_handleURLEvent:(NSAppleEventDescriptor *)event
 {
     NSURL *url = [NSURL URLWithString:[[event paramDescriptorForKeyword:keyDirectObject] stringValue]];
-    [[url normalizedURL] expandFromHosts:[LatticeSchemes shortenedHostnames] expansion:[self _openURLBlock]];
+    [[url normalizedURL] expandFromHosts:[LatticeSchemes shortenedHostnames] expansion:^(NSURL *expandedURL) {
+        NSURL *mappedURL = [self _urlMappedFromURL:url];
+        [self _openURLInDefaultBrowser:mappedURL];
+    }];
 }
 
-- (NSURLExpansionBlock)_openURLBlock
+- (NSURL *)_urlMappedFromURL:(NSURL *)url
 {
-    return [^(NSURL *expandedURL) {
-        NSURL *url = expandedURL;
-        NSString *template;
-        NSString *scheme = [self _schemeMappedFromHost:url.host];
-        if(scheme) {
-            template = [self _templateForHost:url.host path:url.path];
+    NSURL *mappedURL;
+    NSString *template;
+    NSString *scheme = [self _schemeMappedFromHost:url.host];
+    if(scheme) {
+        template = [self _templateForHost:url.host path:url.path];
+    } else {
+        scheme = [self _schemeMappedFromHost:url.host query:url.absoluteString template:&template];
+    }
+    if(scheme && template && [self _urlMatchesPath:url]) {
+        if([template length]) {
+            NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme fromTemplate:template];
+            mappedURL = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
         } else {
-            scheme = [self _schemeMappedFromHost:url.host query:url.absoluteString template:&template];
+            mappedURL = [url urlWithScheme:scheme];
         }
-        if(scheme && template && [self _urlMatchesPath:url]) {
-            if([template length]) {
-                NSDictionary *parameters = [self _parametersForURL:url mappedToScheme:scheme fromTemplate:template];
-                url = [self _urlWithParameters:parameters mappedToScheme:scheme fromTemplate:template];
-            } else {
-                url = [url urlWithScheme:scheme];
-            }
-        }
-        [self _openURLInDefaultBrowser:url];
-    } copy];
+    }
+    return mappedURL;
 }
 
 - (void)_openURLInDefaultBrowser:(NSURL *)url
