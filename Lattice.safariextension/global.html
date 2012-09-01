@@ -6,7 +6,7 @@ safari.application.addEventListener('navigate', registerToHandleURL, false)
 
 var usernamePattern = '[A-Za-z0-9_]{1,15}'
 var statusIDPattern = '[0-9]+'
-var usernamePath = '^/' + usernamePattern + '$'
+var usernamePath = '^/(#?\\!/)?' + usernamePattern + '$'
 var statusIDPath = '^/' + usernamePattern + '/status(es)?/' + statusIDPattern + '$'
 var mediaPath = 'app|artist|album|playlist|track|/p/'
 var documentationPath = '(documentation|DOCUMENTATION)/'
@@ -51,13 +51,12 @@ function shouldRedirect(url) {
 }
 
 function handleOpenURL(event) {
-    var url = event.url
+    var url = event.url.replace('www.', '')
     if(shouldRedirect(url)) {
         url = url.replace('http://',  'lattice://')
         url = url.replace('https://', 'lattices://')
         event.preventDefault()
         safari.application.activeBrowserWindow.activeTab.url = url
-
     } else if(url) {
         safari.application.removeEventListener('beforeNavigate', handleOpenURL, false)
     }
