@@ -17,10 +17,12 @@ Supported Apps
 * Dash (Apple documentation)
 * Spotify
 * Carousel (Instagram viewer)
-   
+* Rdio
+
 Future Plans
 ------------
-* Rdio
+* YouTube
+* Vimeo
 * Twitter for Mac
 
 On Hold
