@@ -10,6 +10,7 @@
 
 #define HTTP  CFSTR("http")
 #define HTTPS CFSTR("https")
+#define WWW @"www."
 
 @interface LatticeSchemes : NSObject
 

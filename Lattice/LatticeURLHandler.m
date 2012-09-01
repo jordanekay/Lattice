@@ -90,11 +90,12 @@ static NSString *const kHashbangPathComponent = @"/#!";
 {
     NSString *template;
     NSURL *mappedURL = url;
-    NSString *scheme = [self _schemeMappedFromHost:url.host];
+    NSString *host = [url.host stringByReplacingOccurrencesOfString:WWW withString:@""];
+    NSString *scheme = [self _schemeMappedFromHost:host];
     if(scheme) {
-        template = [self _templateForHost:url.host path:url.path];
+        template = [self _templateForHost:host path:url.path];
     } else {
-        scheme = [self _schemeMappedFromHost:url.host query:url.absoluteString template:&template];
+        scheme = [self _schemeMappedFromHost:host query:url.absoluteString template:&template];
     }
     if(scheme && template && [self _urlMatchesPath:url]) {
         if([template length]) {
