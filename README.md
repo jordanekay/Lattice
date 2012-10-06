@@ -9,9 +9,12 @@ Lattice is a work in progress, and there remains the possibility that certain ed
 
 Supported Apps
 --------------
-* Tweetbot for Mac (twitter.com -> tweetbot://)
+* Tweetbot for Mac
     * User Profiles
     * Statuses
+* Netbot for Mac
+    * User Profiles
+    * Posts
 * iTunes Store
 * Mac App Store
 * Dash (Apple documentation)
