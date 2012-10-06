@@ -14,6 +14,10 @@ static NSString *const kLatticeSchemeSecure  = @"lattices";
 static NSString *const kTwitterHostname = @"twitter.com";
 static NSString *const kTweetbotScheme  = @"tweetbot://";
 
+static NSString *const kADNHostname          = @"alpha.app.net";
+static NSString *const kADNShortPostHostname = @"posts.app.net";
+static NSString *const kNetbotScheme         = @"netbot://";
+
 static NSString *const kITunesStoreHostname = @"itunes.apple.com";
 static NSString *const kITunesStoreScheme   = @"itms://";
 static NSString *const kMacAppStoreScheme   = @"macappstore://";
@@ -35,12 +39,14 @@ static NSString *const kCarouselScheme    = @"x-mobelux-carousel://";
 
 static NSString *const kUsernameParameter   = @"username";
 static NSString *const kStatusIDParameter   = @"statusID";
+static NSString *const kPostIDParameter     = @"statusID";
 static NSString *const kClassNameParameter  = @"className";
 static NSString *const kResourceIDParameter = @"resourceID";
 static NSString *const kMediaIDParameter    = @"media_id";
 
 static NSString *const kUsernamePattern = @"[A-Za-z0-9_]{1,15}";
 static NSString *const kStatusIDPattern = @"[0-9]+";
+static NSString *const kPostIDPattern   = @"[0-9]+";
 
 static NSString *const kTcoHostname          = @"t.co";
 static NSString *const kSpotifiHostname      = @"spoti.fi";
@@ -54,8 +60,15 @@ static NSString *const kInstagrHostName      = @"instagr.am";
 #define TWITTER_PROFILE_PATH_TEMPLATE [NSString stringWithFormat:@"^(/#!)?/%@$", kUsernamePattern]
 #define TWITTER_STATUS_PATH_TEMPLATE  [NSString stringWithFormat:@"/status(es)?/%@$", kStatusIDPattern]
 
+#define ADN_PROFILE_PATH_TEMPLATE     [NSString stringWithFormat:@"^/%@$", kUsernamePattern]
+#define ADN_SHORT_POST_PATH_TEMPLATE  [NSString stringWithFormat:@"/%@$", kPostIDPattern]
+#define ADN_POST_PATH_TEMPLATE        [NSString stringWithFormat:@"/post/%@$", kPostIDPattern]
+
 #define TWEETBOT_PROFILE_URL_TEMPLATE [NSString stringWithFormat:@"%@%@/user_profile/%@", kTweetbotScheme, kUsernameParameter, kUsernameParameter]
 #define TWEETBOT_STATUS_URL_TEMPLATE  [NSString stringWithFormat:@"%@%@/status/%@", kTweetbotScheme, kUsernameParameter, kStatusIDParameter]
+
+#define NETBOT_PROFILE_URL_TEMPLATE [NSString stringWithFormat:@"%@%@/user_profile/%@", kNetbotScheme, kUsernameParameter, kUsernameParameter]
+#define NETBOT_POST_URL_TEMPLATE    [NSString stringWithFormat:@"%@%@/status/%@", kNetbotScheme, kUsernameParameter, kPostIDParameter]
 
 #define ITUNES_STORE_PATH_TEMPLATE  @"(8$|artist|album|playlist)"
 #define MAC_APP_STORE_PATH_TEMPLATE @"12$"
@@ -86,6 +99,8 @@ static NSString *const kInstagrHostName      = @"instagr.am";
 + (NSDictionary *)templatesForHosts
 {
     return @{kTwitterHostname: @[TWITTER_PROFILE_PATH_TEMPLATE, TWITTER_STATUS_PATH_TEMPLATE],
+                 kADNHostname: @[ADN_PROFILE_PATH_TEMPLATE, ADN_POST_PATH_TEMPLATE],
+        kADNShortPostHostname: @[ADN_SHORT_POST_PATH_TEMPLATE],
          kITunesStoreHostname: @[ITUNES_STORE_PATH_TEMPLATE, MAC_APP_STORE_PATH_TEMPLATE],
       kAppleDeveloperHostname: @[APPLE_DOCUMENTATION_PATH_TEMPLATE],
              kSpotifyHostname: @[SPOTIFY_PATH_TEMPLATE],
@@ -96,6 +111,8 @@ static NSString *const kInstagrHostName      = @"instagr.am";
 + (NSDictionary *)schemesForHosts
 {
     return @{kTwitterHostname: kTweetbotScheme,
+                 kADNHostname: kNetbotScheme,
+        kADNShortPostHostname: kNetbotScheme,
       kAppleDeveloperHostname: kDashScheme,
              kSpotifyHostname: kSpotifyScheme,
                 kRdioHostname: kRdioScheme,
@@ -121,6 +138,9 @@ static NSString *const kInstagrHostName      = @"instagr.am";
 {
     return @{kTweetbotScheme:     @{TWITTER_PROFILE_PATH_TEMPLATE: TWEETBOT_PROFILE_URL_TEMPLATE,
                                      TWITTER_STATUS_PATH_TEMPLATE: TWEETBOT_STATUS_URL_TEMPLATE},
+               kNetbotScheme:         @{ADN_PROFILE_PATH_TEMPLATE: NETBOT_PROFILE_URL_TEMPLATE,
+                                           ADN_POST_PATH_TEMPLATE: NETBOT_POST_URL_TEMPLATE,
+                                     ADN_SHORT_POST_PATH_TEMPLATE: NETBOT_POST_URL_TEMPLATE},
           kITunesStoreScheme:        @{ITUNES_STORE_PATH_TEMPLATE: @""},
           kMacAppStoreScheme:       @{MAC_APP_STORE_PATH_TEMPLATE: @""},
                  kDashScheme: @{APPLE_DOCUMENTATION_PATH_TEMPLATE: DASH_DOCUMENTATION_URL_TEMPLATE},
@@ -133,6 +153,9 @@ static NSString *const kInstagrHostName      = @"instagr.am";
 {
     return @{kTweetbotScheme:     @{TWITTER_PROFILE_PATH_TEMPLATE: @{kUsernameParameter: @1},
                                      TWITTER_STATUS_PATH_TEMPLATE: @{kUsernameParameter: @1, kStatusIDParameter: @3}},
+               kNetbotScheme:         @{ADN_PROFILE_PATH_TEMPLATE: @{kUsernameParameter: @1},
+                                           ADN_POST_PATH_TEMPLATE: @{kUsernameParameter: @1, kPostIDParameter: @3},
+                                     ADN_SHORT_POST_PATH_TEMPLATE: @{kPostIDParameter: @1}},
                  kDashScheme: @{APPLE_DOCUMENTATION_PATH_TEMPLATE: @{kClassNameParameter: @1}},
               kSpotifyScheme:             @{SPOTIFY_PATH_TEMPLATE: @{kResourceIDParameter: @1}},
                  kRdioScheme:                @{RDIO_PATH_TEMPLATE: @{kResourceIDParameter: @1}}};

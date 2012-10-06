@@ -6,14 +6,16 @@ safari.application.addEventListener('navigate', registerToHandleURL, false)
 
 var usernamePattern = '[A-Za-z0-9_]{1,15}'
 var statusIDPattern = '[0-9]+'
+var postIDPattern = '[0-9]+'
 var usernamePath = '^/(#?\\!/)?' + usernamePattern + '$'
 var statusIDPath = '^/' + usernamePattern + '/status(es)?/' + statusIDPattern + '$'
+var postIDPath = '^/(' + usernamePattern + '/post/)?' + postIDPattern + '$'
 var mediaPath = 'app|artist|album|playlist|track|/p/'
 var documentationPath = '(documentation|DOCUMENTATION)/'
 
-var hosts = ['twitter.com', 'itunes.apple.com', 'developer.apple.com', 'open.spotify.com', 'rdio.com', 'instagram.com']
+var hosts = ['twitter.com', 'alpha.app.net', 'posts.app.net,', 'itunes.apple.com', 'developer.apple.com', 'open.spotify.com', 'rdio.com', 'instagram.com']
 var parameterlessHosts = ['twitter.com']
-var pathnames = [usernamePath, statusIDPath, mediaPath, documentationPath]
+var pathnames = [usernamePath, statusIDPath, postIDPath, mediaPath, documentationPath]
 
 Array.prototype.contains = function(obj) {
     for(i in this) {
