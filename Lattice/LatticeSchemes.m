@@ -27,6 +27,8 @@ static NSString *const kSpotifyScheme   = @"spotify://";
 static NSString *const kRdioHostname = @"rdio.com";
 static NSString *const kRdioScheme   = @"rdio://";
 
+static NSString *const kYoutubeHostname = @"youtube.com";
+
 static NSString *const kInstagramHostname = @"instagram.com";
 static NSString *const kInstagramOEmbed   = @"api.instagram.com/oembed?url=";
 static NSString *const kCarouselScheme    = @"x-mobelux-carousel://";
@@ -40,12 +42,14 @@ static NSString *const kMediaIDParameter    = @"media_id";
 static NSString *const kUsernamePattern = @"[A-Za-z0-9_]{1,15}";
 static NSString *const kStatusIDPattern = @"[0-9]+";
 
-static NSString *const kTcoHostname       = @"t.co";
-static NSString *const kSpotifiHostname   = @"spoti.fi";
-static NSString *const kRdioShortHostname = @"rd.io";
-static NSString *const kBitlyHostname     = @"bit.ly";
-static NSString *const kJmpHostname       = @"j.mp";
-static NSString *const kInstagrHostName   = @"instagr.am";
+static NSString *const kTcoHostname          = @"t.co";
+static NSString *const kSpotifiHostname      = @"spoti.fi";
+static NSString *const kITunesShortHostname  = @"itun.es";
+static NSString *const kRdioShortHostname    = @"rd.io";
+static NSString *const kYoutubeShortHostname = @"youtu.be";
+static NSString *const kBitlyHostname        = @"bit.ly";
+static NSString *const kJmpHostname          = @"j.mp";
+static NSString *const kInstagrHostName      = @"instagr.am";
 
 #define TWITTER_PROFILE_PATH_TEMPLATE [NSString stringWithFormat:@"^(/#!)?/%@$", kUsernamePattern]
 #define TWITTER_STATUS_PATH_TEMPLATE  [NSString stringWithFormat:@"/status(es)?/%@$", kStatusIDPattern]
@@ -64,6 +68,9 @@ static NSString *const kInstagrHostName   = @"instagr.am";
 
 #define RDIO_PATH_TEMPLATE @"^/(.*)"
 #define RDIO_URL_TEMPLATE  [NSString stringWithFormat:@"%@%@/%@", kRdioScheme, kRdioHostname, kResourceIDParameter]
+
+#define YOUTUBE_PARAMETER_TEMPLATE @"watch\\?v=([^&]*)"
+#define YOUTUBE_EMBED_TEMPLATE [NSString stringWithFormat:@"%@://%@%@/embed/%@?html5=True&autoplay=1", HTTP, WWW, kYoutubeHostname, @"%@"]
 
 #define INSTAGRAM_PATH_TEMPLATE @"^/p/.+$"
 #define CAROUSEL_URL_TEMPLATE [NSString stringWithFormat:@"%@openmedia?mediaID=%@", kCarouselScheme, kMediaIDParameter]
@@ -131,6 +138,16 @@ static NSString *const kInstagrHostName   = @"instagr.am";
                  kRdioScheme:                @{RDIO_PATH_TEMPLATE: @{kResourceIDParameter: @1}}};
 }
 
++ (NSDictionary *)nativeHosts
+{
+    return @{kYoutubeHostname: YOUTUBE_PARAMETER_TEMPLATE};
+}
+
++ (NSDictionary *)embedStrings
+{
+    return @{kYoutubeHostname: YOUTUBE_EMBED_TEMPLATE};
+}
+
 + (NSArray *)schemesWithCaptureGroups
 {
     return @[kDashScheme, kSpotifyScheme, kRdioScheme];
@@ -143,7 +160,7 @@ static NSString *const kInstagrHostName   = @"instagr.am";
 
 + (NSArray *)shortenedHostnames
 {
-    return @[kTcoHostname, kSpotifiHostname, kRdioShortHostname, kBitlyHostname, kJmpHostname, kInstagrHostName];
+    return @[kTcoHostname, kSpotifiHostname, kITunesShortHostname, kRdioShortHostname, kYoutubeShortHostname, kBitlyHostname, kJmpHostname, kInstagrHostName];
 }
 
 @end

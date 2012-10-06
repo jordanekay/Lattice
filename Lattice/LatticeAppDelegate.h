@@ -10,4 +10,6 @@
 
 @interface LatticeAppDelegate : NSObject <NSApplicationDelegate>
 
+- (void)openServiceFromHost:(NSString *)service withParameter:(NSString *)parameter;
+
 @end

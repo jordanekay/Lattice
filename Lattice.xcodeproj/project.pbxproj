@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4516554C15E77970004BA1C5 /* LatticeSchemes.m in Sources */ = {isa = PBXBuildFile; fileRef = 4516554B15E77970004BA1C5 /* LatticeSchemes.m */; };
+		451A876915F2D04B004C95E4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 451A876815F2D04B004C95E4 /* WebKit.framework */; };
 		4570146A15E984B2008B91F0 /* NSURL+Expansion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4570146915E984B2008B91F0 /* NSURL+Expansion.m */; };
 		45AE7CF415E4B850008F3D6A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45AE7CF315E4B850008F3D6A /* Cocoa.framework */; };
 		45AE7CFE15E4B850008F3D6A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 45AE7CFC15E4B850008F3D6A /* InfoPlist.strings */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		4516554A15E77970004BA1C5 /* LatticeSchemes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatticeSchemes.h; sourceTree = "<group>"; };
 		4516554B15E77970004BA1C5 /* LatticeSchemes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatticeSchemes.m; sourceTree = "<group>"; };
+		451A876815F2D04B004C95E4 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		4570146815E984B2008B91F0 /* NSURL+Expansion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Expansion.h"; sourceTree = "<group>"; };
 		4570146915E984B2008B91F0 /* NSURL+Expansion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Expansion.m"; sourceTree = "<group>"; };
 		45AE7CEF15E4B850008F3D6A /* Lattice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lattice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				451A876915F2D04B004C95E4 /* WebKit.framework in Frameworks */,
 				45AE7CF415E4B850008F3D6A /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -105,6 +108,7 @@
 			children = (
 				45AE7CF315E4B850008F3D6A /* Cocoa.framework */,
 				45AE7D1115E4B850008F3D6A /* SenTestingKit.framework */,
+				451A876815F2D04B004C95E4 /* WebKit.framework */,
 				45AE7CF515E4B850008F3D6A /* Other Frameworks */,
 			);
 			name = Frameworks;

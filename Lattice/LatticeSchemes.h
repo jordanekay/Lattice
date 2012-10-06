@@ -22,6 +22,8 @@
 + (NSDictionary *)queryBasedSchemesForHosts;
 + (NSDictionary *)templatesForSchemes;
 + (NSDictionary *)parametersForSchemes;
++ (NSDictionary *)nativeHosts;
++ (NSDictionary *)embedStrings;
 + (NSArray *)schemesWithCaptureGroups;
 + (NSArray *)hostnamesWithParameterlessPaths;
 + (NSArray *)shortenedHostnames;

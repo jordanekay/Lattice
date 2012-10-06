@@ -9,6 +9,7 @@
 #import "LatticeSchemes.h"
 #import "LatticeURLHandler.h"
 #import "NSURL+Expansion.h"
+#import "LatticeAppDelegate.h"
 
 static NSString *const kDefaultHandlerKey     = @"defaultHandler";
 static NSString *const kHashbangPathComponent = @"/#!";
@@ -80,7 +81,9 @@ static NSString *const kHashbangPathComponent = @"/#!";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             NSURL *mappedURL = [self _urlMappedFromURL:expandedURL];
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self _openURLInDefaultBrowser:mappedURL];
+                if(![self _openURLNatively:mappedURL]) {
+                    [self _openURLInDefaultBrowser:mappedURL];
+                }
             });
         });
     }];
@@ -106,6 +109,22 @@ static NSString *const kHashbangPathComponent = @"/#!";
         }
     }
     return mappedURL;
+}
+
+- (BOOL)_openURLNatively:(NSURL *)url
+{
+    BOOL shouldOpen = NO;
+    NSString *host = [url.host stringByReplacingOccurrencesOfString:WWW withString:@""];
+    NSString *parameterTemplate = [LatticeSchemes nativeHosts][host];
+    if(parameterTemplate) {
+        shouldOpen = YES;
+        NSString *string = url.absoluteString;
+        NSRegularExpression *templateRegex = [NSRegularExpression regularExpressionWithPattern:parameterTemplate options:0 error:nil];
+        NSTextCheckingResult *result = [[templateRegex matchesInString:string options:0 range:NSMakeRange(0, [string length])] lastObject];
+        NSString *parameter = [string substringWithRange:[result rangeAtIndex:1]];
+        [((LatticeAppDelegate *)[NSApp delegate]) openServiceFromHost:host withParameter:parameter];
+    }
+    return shouldOpen;
 }
 
 - (void)_openURLInDefaultBrowser:(NSURL *)url
