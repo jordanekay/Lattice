@@ -12,9 +12,6 @@ Supported Apps
 * Tweetbot for Mac
     * User Profiles
     * Statuses
-* Netbot for Mac
-    * User Profiles
-    * Posts
 * iTunes Store
 * Mac App Store
 * Dash (Apple documentation)
